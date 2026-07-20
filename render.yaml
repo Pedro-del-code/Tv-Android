@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: android-tv-remote
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: node server.js
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_VERSION
+        value: "20"
+      # Diretório onde os certificados de pareamento são salvos.
+      # No plano free o disco é efêmero; para persistir entre deploys,
+      # adicione um Disk no Render e aponte CERT_DIR para o mount path.
+      - key: CERT_DIR
+        value: /opt/render/project/src/.certs

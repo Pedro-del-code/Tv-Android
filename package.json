@@ -1,0 +1,22 @@
+{
+  "name": "android-tv-remote",
+  "version": "1.0.0",
+  "private": true,
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "dev": "node server.js",
+    "start": "node server.js"
+  },
+  "pnpm": {
+    "overrides": {
+      "hono": "4.12.25"
+    }
+  },
+  "dependencies": {
+    "androidtv-remote": "^1.0.10",
+    "express": "^5.2.1",
+    "ws": "^8.21.1"
+  }
+}
