@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#101014" />
+  <title>Controle Remoto - Android TV</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <main class="shell">
+    <!-- Tela 1: Conexão -->
+    <section id="screen-connect" class="screen active">
+      <header class="screen-header">
+        <div class="logo-dot" aria-hidden="true"></div>
+        <h1>Controle Remoto</h1>
+        <p>Android TV</p>
+      </header>
+      <form id="connect-form" class="card">
+        <label for="tv-host">Endereço IP da TV</label>
+        <input
+          id="tv-host"
+          type="text"
+          inputmode="decimal"
+          placeholder="192.168.0.10"
+          autocomplete="off"
+          required
+        />
+        <p class="hint">
+          Encontre o IP em: Configurações &gt; Rede e Internet na sua TV.
+          A TV e o servidor precisam se alcançar pela rede.
+        </p>
+        <button type="submit" class="btn-primary" id="btn-connect">Conectar</button>
+      </form>
+      <p id="connect-status" class="status" role="status"></p>
+    </section>
+
+    <!-- Tela 2: Pareamento -->
+    <section id="screen-pairing" class="screen">
+      <header class="screen-header">
+        <div class="logo-dot pulse" aria-hidden="true"></div>
+        <h1>Pareamento</h1>
+        <p>Digite o código exibido na tela da TV</p>
+      </header>
+      <form id="pairing-form" class="card">
+        <label for="pairing-code">Código de pareamento</label>
+        <input
+          id="pairing-code"
+          type="text"
+          inputmode="text"
+          placeholder="ABC123"
+          maxlength="6"
+          autocomplete="one-time-code"
+          class="code-input"
+          required
+        />
+        <button type="submit" class="btn-primary">Parear</button>
+        <button type="button" class="btn-ghost" id="btn-cancel-pairing">Cancelar</button>
+      </form>
+      <p id="pairing-status" class="status" role="status"></p>
+    </section>
+
+    <!-- Tela 3: Controle -->
+    <section id="screen-remote" class="screen">
+      <header class="remote-header">
+        <div class="tv-info">
+          <span class="conn-dot" id="conn-dot" aria-hidden="true"></span>
+          <span id="tv-label">TV</span>
+        </div>
+        <button type="button" class="btn-icon" id="btn-disconnect" aria-label="Desconectar">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <path d="M18 6L6 18M6 6l12 12"/>
+          </svg>
+        </button>
+      </header>
+
+      <div class="remote-body">
+        <!-- Linha superior: power / input -->
+        <div class="row top-row">
+          <button type="button" class="btn-round btn-power" data-action="power" aria-label="Ligar ou desligar">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <path d="M12 2v10"/><path d="M18.4 6.6a9 9 0 1 1-12.77.04"/>
+            </svg>
+          </button>
+          <button type="button" class="btn-round" data-key="tv_input" aria-label="Entrada">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="5" width="20" height="14" rx="2"/><path d="M8 21h8"/>
+            </svg>
+          </button>
+        </div>
+
+        <!-- D-pad -->
+        <div class="dpad" role="group" aria-label="Navegação direcional">
+          <button type="button" class="dpad-btn dpad-up" data-key="up" aria-label="Cima">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+          </button>
+          <button type="button" class="dpad-btn dpad-left" data-key="left" aria-label="Esquerda">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+          </button>
+          <button type="button" class="dpad-btn dpad-ok" data-key="ok" aria-label="OK">OK</button>
+          <button type="button" class="dpad-btn dpad-right" data-key="right" aria-label="Direita">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+          </button>
+          <button type="button" class="dpad-btn dpad-down" data-key="down" aria-label="Baixo">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+        </div>
+
+        <!-- Voltar / Home / Menu -->
+        <div class="row nav-row">
+          <button type="button" class="btn-round" data-key="back" aria-label="Voltar">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14L4 9l5-5"/><path d="M4 9h10a6 6 0 0 1 0 12h-3"/></svg>
+          </button>
+          <button type="button" class="btn-round" data-key="home" aria-label="Início">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5L12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg>
+          </button>
+          <button type="button" class="btn-round" data-key="menu" aria-label="Menu">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+          </button>
+        </div>
+
+        <!-- Volume / Canais -->
+        <div class="row pill-row">
+          <div class="pill" role="group" aria-label="Volume">
+            <button type="button" data-key="volume_up" aria-label="Aumentar volume">+</button>
+            <span class="pill-label">VOL</span>
+            <button type="button" data-key="volume_down" aria-label="Diminuir volume">&minus;</button>
+          </div>
+          <button type="button" class="btn-round btn-mute" data-key="mute" aria-label="Mudo">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4z"/><path d="M23 9l-6 6M17 9l6 6"/></svg>
+          </button>
+          <div class="pill" role="group" aria-label="Canais">
+            <button type="button" data-key="channel_up" aria-label="Próximo canal">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+            </button>
+            <span class="pill-label">CH</span>
+            <button type="button" data-key="channel_down" aria-label="Canal anterior">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Mídia -->
+        <div class="row media-row" role="group" aria-label="Controles de mídia">
+          <button type="button" class="btn-round btn-media" data-key="rewind" aria-label="Retroceder">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M11 12l8.5-6v12L11 12zm-7.5 0L12 6v12l-8.5-6z"/></svg>
+          </button>
+          <button type="button" class="btn-round btn-media btn-play" data-key="play_pause" aria-label="Reproduzir ou pausar">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M8 5v14l7-7-7-7zm9 0h2v14h-2V5z" transform="translate(-1 0)"/></svg>
+          </button>
+          <button type="button" class="btn-round btn-media" data-key="forward" aria-label="Avançar">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M13 12L4.5 6v12L13 12zm7.5 0L12 6v12l8.5-6z"/></svg>
+          </button>
+        </div>
+
+        <p class="current-app" id="current-app"></p>
+      </div>
+
+      <p id="remote-status" class="status" role="status"></p>
+    </section>
+  </main>
+
+  <script src="/app.js"></script>
+</body>
+</html>
